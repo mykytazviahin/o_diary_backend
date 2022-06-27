@@ -1,14 +1,15 @@
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
+import express from "express";
 
-dotenv.config();
+import { AuthRoutes } from "./src/routes/AuthRoutes";
+import { dbConnection } from "./src/db/db";
 
-const app: Express = express();
+
+const app = express();
 const port = process.env.PORT;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
+dbConnection();
+
+app.use("/api/user", AuthRoutes);
 
 app.listen(port, () => {
   console.log(`⚡️[server]: Server is running at https://localhost:${port}`);
